@@ -77,7 +77,7 @@ func getPage(method, url string, body io.Reader, headers map[string]string) (*ht
 	return w, nil
 }
 
-func Test_handleName_01(t *testing.T) {
+func TestHandleName(t *testing.T) {
 	data, err := getPage(http.MethodGet, "name/Tester", nil, nil)
 	require.NoError(t, err)
 	b, err := ioutil.ReadAll(data.Body)
@@ -85,13 +85,13 @@ func Test_handleName_01(t *testing.T) {
 	assert.Equal(t, "Hello, Tester!", string(b))
 }
 
-func Test_handleBad_01(t *testing.T) {
+func TestHandleBad(t *testing.T) {
 	data, err := getPage(http.MethodGet, "bad", nil, nil)
 	require.NoError(t, err)
 	assert.Equal(t, http.StatusInternalServerError, data.StatusCode)
 }
 
-func Test_handlePost_01(t *testing.T) {
+func TestHandlePost(t *testing.T) {
 	data, err := getPage(http.MethodPost, "data", bytes.NewBuffer([]byte("my message")), nil)
 	require.NoError(t, err)
 	b, err := ioutil.ReadAll(data.Body)
@@ -99,7 +99,7 @@ func Test_handlePost_01(t *testing.T) {
 	assert.Equal(t, "I got message:\nmy message", string(b))
 }
 
-func Test_handleHeader(t *testing.T) {
+func TestHandleHeader(t *testing.T) {
 	headers := []struct {
 		in  map[string]string
 		out string
